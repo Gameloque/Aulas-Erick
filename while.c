@@ -4,7 +4,7 @@
     int a = 0;
     while(a < 5) {
          printf("%d\n", a);
-        a++;
+        a = a+2;
        
 
     } 
