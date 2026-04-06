@@ -1,15 +1,17 @@
+/*Aqui tem For + While + Do While*/
 #include <stdio.h>
 
 int main () {
     int numero;
     int limite = 11;
-    printf("TABUADA\n");
-    printf("Digite o número que meu fi quer saber: ");
-    scanf("%d", &numero);
+    //printf("TABUADA\n");
+    //printf("Digite o número que meu fi quer saber: ");
+    //scanf("%d", &numero);
 
-    /* Estrutura For*/
-    /*for(int i = 0; i <10; limite)*/
-
+    /* Estrutura For
+    for(int i = 0; i <10; limite){
+    //printf("%d", i);
+}*/
     /*Estrutura WHILE*/
     /*printf(" WHILE\n");
     int i = 0;
@@ -29,6 +31,7 @@ int main () {
         printf("%d x %d = %d\n", numero, i, resultado2);
         i++;
     }while(i < limite);
+
 
 return 0;
 }
