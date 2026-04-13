@@ -1,17 +1,25 @@
 #include <stdio.h>
 
-int main(void){
-    int opcao, presenca;
-    float nota_1, nota_2, nota_3, media;
-
-        printf("                   ------------ MENU ------------            \n");
+void menu(){
+    printf("                   ------------ MENU ------------            \n");
         printf(" Digite 1 para saber sua media\n");
         printf(" Digite 2 para saber sua presenca\n");
         printf(" Digite 3 para saber se foi aprovado\n");
         printf(" Digite a opcao desejada: ");
 
-        scanf("%d", &opcao);
+}
+
+float media_arit(float nota_1,float nota_2,float nota_3){
+    
+    return (nota_1 + nota_2 + nota_3)/3;
+}
+
+int main(){
+    int opcao, presenca;
+    float nota_1, nota_2, nota_3, media_ait;
         
+    menu();
+    scanf("%d", &opcao);
         switch(opcao){
             
             case 1:
@@ -22,8 +30,9 @@ int main(void){
             scanf("%f", &nota_2);
             printf(" Digite sua terceira nota: ");
             scanf("%f", &nota_3);
-            media = (nota_1 + nota_2 + nota_3)/3;
-            printf("A sua media final e: %.2f", media);
+            //media = (nota_1 + nota_2 + nota_3)/3; // substituir essa equação
+            media_arit = media_arit(nota_1, nota_2, nota_3);
+            printf("A sua media final e: %.2f", media_arit);
 
             break; // Sai do Switch
             
