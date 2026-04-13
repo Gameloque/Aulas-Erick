@@ -31,10 +31,12 @@ int main(void){
                 printf("\n ------------ PRESENCA ------------\n");
                 printf(" Quanto foi sua presenca esse semestre? \n");
                 scanf("%d", &presenca);
-                if(presenca > 74){
-                    printf(" Aluno Aprovado com %d %%", presenca);
+                if(presenca > 74 && presenca < 101){
+                    printf(" ALUNO APROVADO COM %d %%", presenca);
+                }else if(presenca > 100 || presenca < 0){
+                    printf(" QUE ISSO CHEFE?");
                 }else{
-                    printf("Aluno Reprovado!");
+                    printf(" ALUNO REPROVADO!");
                 }
 
                 break;
