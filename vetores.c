@@ -15,6 +15,8 @@ int main(){
     }
     printf("A media do aluno e: %.2f\n", soma/quantidade_notas);
   
+    char s1[10] = "Aula";
+    char s2[] = "FIAP";
 
 return 0;
 }
