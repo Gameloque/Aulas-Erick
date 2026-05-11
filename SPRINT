@@ -1,0 +1,88 @@
+#include <stdio.h>
+
+#define TARIFA_COMERCIAL 1.80  
+#define TARIFA_PARTICULAR 0.75
+int main() {
+    float hora_inicio, hora_final, minutos_recarga;
+    int tipo_usuario, tipo_carregador;
+    float potencia, energia, custo;
+    
+    printf("=== SIMULADOR DE RECARGA SIMPLES ===\n\n");
+    
+    // 1. PEDIR TIPO DE USUARIO E CARREGADOR
+    printf("1 - Particular   2 - Comercial\n");
+    printf("Digite 1 ou 2: ");
+    scanf("%d", &tipo_usuario);
+    
+    printf("1 - MODELO 11kW   2 - MODELO 22kW 3 - MODELO 7kW \n");
+    printf("Digite 1, 2 ou 3: ");
+    scanf("%d", &tipo_carregador);
+    
+    // 2. PEDIR HORA INICIO E HORA FINAL
+    printf("Hora inicio (0-23): ");
+    scanf("%f", &hora_inicio);
+    printf("Hora final (0-23): ");
+    scanf("%f", &hora_final);
+    
+    // 3. CALCULO MINUTOS 
+    int ok = 0;
+    while(ok == 0) {
+        minutos_recarga = (hora_final *60) - (hora_inicio * 60);
+        printf("Minutos de recarga (1-480): %.2f ", minutos_recarga);
+        
+        if(minutos_recarga >= 1 && minutos_recarga <= 480) {
+            ok = 1;  // SAIR DO LOOP
+        } else {
+            printf("ERRO! Digite 1 a 480\n");
+        }
+    }
+    
+    // 4. CALCULAR ENERGIA
+    if(tipo_carregador == 1){
+    potencia = 11.0;
+    energia = (potencia * minutos_recarga) / 60.0;
+        }else if(tipo_carregador == 2){
+        potencia = 22.0;
+        energia = (potencia * minutos_recarga) / 60.0;
+        }else{
+         potencia = 7.0;
+         energia = (potencia * minutos_recarga) / 60.0;
+        }
+    // 5. ESCOLHER TARIFA 
+    float tarifa;
+    if(tipo_usuario == 1) {
+        tarifa = TARIFA_PARTICULAR;
+        printf("Tarifa Particular!\n");
+    } else {
+        tarifa = TARIFA_COMERCIAL;
+        printf("Tarifa Comercial!\n");
+    }
+    
+    // Desconto comercial
+    switch(tipo_usuario) {
+        case 2:
+            tarifa = tarifa * 0.9;
+            printf("Desconto comercial aplicado!\n");
+            break;
+        default:
+            break;
+    }
+    
+    // 6. CALCULAR CUSTO
+    custo = energia * tarifa;
+    
+    // 7. MOSTRAR RESULTADO (saida formatada)
+    printf("\n=== RELATORIO FINAL ===\n");
+    printf("Hora inicio: %.0f:00 h\n", hora_inicio);
+    printf("Hora final: %.0f:00 h\n", hora_final);
+    printf("Tempo de carga: %.0f:00 h\n", minutos_recarga / 60);
+    printf("Tipo do Carregador: %d\n", tipo_carregador);
+    printf("Tempo: %.2f minutos\n", minutos_recarga);
+    printf("Energia: %.2f kWh\n", energia);
+    printf("Tarifa: R$ %.2f/kWh\n", tarifa);
+    printf("COSTO TOTAL: R$ %.2f\n", custo);
+    
+    printf("\nSessao finalizada!\n");
+    
+    return 0;
+}
