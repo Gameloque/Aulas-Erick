@@ -40,7 +40,7 @@ int main() {
                 printf("Volte sempre!\n");
                 break;
             default:
-                printf("\n❌ OPCAO INVALIDA! Escolha entre 0 e 3.\n");
+                printf("\n OPCAO INVALIDA! Escolha entre 0 e 3.\n");
                 system("pause || read -p 'Pressione Enter...'");  // Pausa cross-platform
         }
         
@@ -59,12 +59,12 @@ int main() {
 void exibirMenu() {
     printf("\n");
     printf("============================\n");
-    printf("🏦  CAIXA ELETRONICO FIAP  🏦\n");
+    printf("  CAIXA ELETRONICO FIAP  \n");
     printf("============================\n");
-    printf("💰 1 - Consultar Saldo\n");
-    printf("💸 2 - Realizar Saque\n");
-    printf("💵 3 - Realizar Deposito\n");
-    printf("🚪 0 - Sair\n");
+    printf(" 1 - Consultar Saldo\n");
+    printf(" 2 - Realizar Saque\n");
+    printf(" 3 - Realizar Deposito\n");
+    printf(" 0 - Sair\n");
     printf("============================\n");
     printf("Digite sua opcao: ");
 }
@@ -73,7 +73,7 @@ void exibirMenu() {
 void consultarSaldo(float saldo) {
     printf("\n");
     printf("===================\n");
-    printf("💳 SALDO ATUAL 💳\n");
+    printf(" SALDO ATUAL \n");
     printf("===================\n");
     printf("R$ %.2f\n", saldo);
     printf("===================\n");
@@ -83,7 +83,7 @@ void consultarSaldo(float saldo) {
 float realizarSaque(float saldoAtual) {
     float valorSaque;
     
-    printf("\n💸 SAQUE\n");
+    printf("\n SAQUE\n");
     printf("--------\n");
     printf("Saldo atual: R$ %.2f\n", saldoAtual);
     printf("Digite o valor do saque: R$ ");
@@ -92,24 +92,24 @@ float realizarSaque(float saldoAtual) {
     
     // Validacoes de seguranca
     if(valorSaque <= 0) {
-        printf("❌ Valor invalido! Deve ser maior que zero.\n");
+        printf(" Valor invalido! Deve ser maior que zero.\n");
         return saldoAtual;
     }
     
     if(valorSaque > 1000.00) {
-        printf("❌ Limite diario excedido! Maximo R$ 1.000,00\n");
+        printf(" Limite diario excedido! Maximo R$ 1.000,00\n");
         return saldoAtual;
     }
     
     if(valorSaque > saldoAtual) {
-        printf("❌ Saldo insuficiente!\n");
+        printf(" Saldo insuficiente!\n");
         printf("Voce tem: R$ %.2f\n", saldoAtual);
         return saldoAtual;
     }
     
     // Saque autorizado
     saldoAtual -= valorSaque;
-    printf("✅ Saque de R$ %.2f realizado com sucesso!\n", valorSaque);
+    printf(" Saque de R$ %.2f realizado com sucesso!\n", valorSaque);
     printf("Novo saldo: R$ %.2f\n", saldoAtual);
     
     return saldoAtual;
@@ -119,7 +119,7 @@ float realizarSaque(float saldoAtual) {
 float realizarDeposito(float saldoAtual) {
     float valorDeposito;
     
-    printf("\n💵 DEPOSITO\n");
+    printf("\n DEPOSITO\n");
     printf("-----------\n");
     printf("Saldo atual: R$ %.2f\n", saldoAtual);
     printf("Digite o valor do deposito: R$ ");
@@ -128,12 +128,12 @@ float realizarDeposito(float saldoAtual) {
     
     // Validacao do deposito
     if(valorDeposito <= 0) {
-        printf("❌ Valor invalido! Deve ser maior que zero.\n");
+        printf(" Valor invalido! Deve ser maior que zero.\n");
         return saldoAtual;
     }
     
     saldoAtual += valorDeposito;
-    printf("✅ Deposito de R$ %.2f realizado com sucesso!\n", valorDeposito);
+    printf(" Deposito de R$ %.2f realizado com sucesso!\n", valorDeposito);
     printf("Novo saldo: R$ %.2f\n", saldoAtual);
     
     return saldoAtual;
