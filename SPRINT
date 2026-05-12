@@ -75,9 +75,11 @@ int main() {
     printf("\n=== RELATORIO FINAL ===\n");
     printf("Hora inicio: %.0f:00 h\n", hora_inicio);
     printf("Hora final: %.0f:00 h\n", hora_final);
+    printf("\n");
     printf("Tempo de carga: %.0f:00 h\n", minutos_recarga / 60);
     printf("Tipo do Carregador: %d\n", tipo_carregador);
     printf("Tempo: %.2f minutos\n", minutos_recarga);
+    printf("\n");
     printf("Energia: %.2f kWh\n", energia);
     printf("Tarifa: R$ %.2f/kWh\n", tarifa);
     printf("COSTO TOTAL: R$ %.2f\n", custo);
