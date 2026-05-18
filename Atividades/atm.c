@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Prototipos das funcoes
+//Funções usadas
 void exibirMenu();
 void consultarSaldo(float saldo);
 float realizarSaque(float saldo);
@@ -9,22 +9,22 @@ float realizarDeposito(float saldo);
 void limparBuffer();
 
 int main() {
-    float saldo = 1000;  // Saldo inicial
+    float saldo = 0;  // Saldo inicial, como se fosse uma conta nova
     int opcao;
     
     printf("Bem-vindo ao CAIXA ELETRONICO FIAP!\n");
     printf("Saldo inicial: R$ %.2f\n\n", saldo);
     
-    // Loop principal - Mantem o sistema ativo
+    // Esse é o loop principal para manter o sistema ativo
     do {
-        system("cls || clear");  // Limpa tela (Windows/Linux/Mac)
+        system("cls || clear");  // Limpar a tela
         exibirMenu();
         
-        // Leitura da opcao do usuario
+        // Leitura da opção do usuário
         scanf("%d", &opcao);
-        limparBuffer();  // Limpa buffer do teclado
+        limparBuffer();  // Limpar o buffer do teclado
         
-        // Switch-case para processar a opcao
+        // Switch-case para processar a opção selecionada, bem simples
         switch(opcao) {
             case 1:
                 consultarSaldo(saldo);
@@ -41,11 +41,11 @@ int main() {
                 break;
             default:
                 printf("\n OPCAO INVALIDA! Escolha entre 0 e 3.\n");
-                system("pause || read -p 'Pressione Enter...'");  // Pausa cross-platform
+                system("pausa || ler -p 'Pressione Enter...'");
         }
         
-        // Pausa apos cada operacao (exceto saida)
-        if(opcao != 0) {
+        // Pausa após cada operação (exceto saida) -- Assim o usuário verifica se está tudo correto
+            if(opcao != 0) {
             printf("\nPressione Enter para continuar...");
             getchar();
         }
@@ -55,7 +55,7 @@ int main() {
     return 0;
 }
 
-// Funcao para exibir o menu principal
+// Função para exibir o menu principal -- Funciona igual arduíno? kkk
 void exibirMenu() {
     printf("\n");
     printf("============================\n");
@@ -69,7 +69,7 @@ void exibirMenu() {
     printf("Digite sua opcao: ");
 }
 
-// Funcao para consultar saldo atual
+// Função para consultar o saldo atual
 void consultarSaldo(float saldo) {
     printf("\n");
     printf("===================\n");
@@ -79,7 +79,7 @@ void consultarSaldo(float saldo) {
     printf("===================\n");
 }
 
-// Funcao para realizar saque com validacoes completas
+// Função para realizar o saque
 float realizarSaque(float saldoAtual) {
     float valorSaque;
     
@@ -90,7 +90,7 @@ float realizarSaque(float saldoAtual) {
     scanf("%f", &valorSaque);
     limparBuffer();
     
-    // Validacoes de seguranca
+    // Validações de seguranca para verificar se o usuário não tente burlar o sistema com valores negativos ou exceder um máximo de 1000 reais
     if(valorSaque <= 0) {
         printf(" Valor invalido! Deve ser maior que zero.\n");
         return saldoAtual;
@@ -107,7 +107,7 @@ float realizarSaque(float saldoAtual) {
         return saldoAtual;
     }
     
-    // Saque autorizado
+    // Saque autorizado -- Aqui Printa se o saque for 100% autorizado
     saldoAtual -= valorSaque;
     printf(" Saque de R$ %.2f realizado com sucesso!\n", valorSaque);
     printf("Novo saldo: R$ %.2f\n", saldoAtual);
@@ -115,7 +115,7 @@ float realizarSaque(float saldoAtual) {
     return saldoAtual;
 }
 
-// Funcao para realizar deposito
+// Função para realizar depósito 
 float realizarDeposito(float saldoAtual) {
     float valorDeposito;
     
@@ -126,7 +126,7 @@ float realizarDeposito(float saldoAtual) {
     scanf("%f", &valorDeposito);
     limparBuffer();
     
-    // Validacao do deposito
+    // Validação do deposito --- Ou seja, Verifica se o depósito é válido ou não
     if(valorDeposito <= 0) {
         printf(" Valor invalido! Deve ser maior que zero.\n");
         return saldoAtual;
@@ -139,7 +139,7 @@ float realizarDeposito(float saldoAtual) {
     return saldoAtual;
 }
 
-// Funcao utilitaria para limpar buffer do teclado
+// Função para limpar o buffer do teclado, está fora do main, pois assim pode ser chamada na função globalmente, sem ocorrer problemas
 void limparBuffer() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
