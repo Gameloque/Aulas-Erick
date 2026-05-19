@@ -33,7 +33,12 @@ int main() {
         if(minutos_recarga >= 1 && minutos_recarga <= 480) {
             ok = 1;  // SAIR DO LOOP
         } else {
-            printf("ERRO! Digite 1 a 480\n");
+           
+        printf("\nERRO! Tempo invalido. Minutos deve ser 1-480 (Até 8 horas de carga sem parar)!\n");
+        printf("Hora inicio (0-23): ");
+        scanf("%f", &hora_inicio);
+        printf("Hora final (0-23): ");
+        scanf("%f", &hora_final);
         }
     }
     
