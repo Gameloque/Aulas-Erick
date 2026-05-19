@@ -7,7 +7,7 @@ int main() {
     int tipo_usuario, tipo_carregador;
     float potencia, energia, custo;
     
-    printf("=== SIMULADOR DE RECARGA SIMPLES ===\n\n");
+    printf("=== SIMULADOR DE RECARGA ===\n\n");
     
     // 1. PEDIR TIPO DE USUARIO E CARREGADOR
     printf("1 - Particular   2 - Comercial\n");
