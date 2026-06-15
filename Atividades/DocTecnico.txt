@@ -1,0 +1,208 @@
+#include <stdio.h>
+
+#define MAX_SESSOES 10
+#define POTENCIA_MAXIMA 100
+
+// Nessa parte, usamos o struct para gerenciar multiplas informações, por exemplo uma ficha de cadastro
+struct Sessao {
+    int id;
+    char veiculo[30];
+    float energia;
+    int ativa;
+};
+//Aqui armazenamos 4 informações de uma vez, sem precisar criar várias váriaveis
+
+
+struct Sessao sessoes[MAX_SESSOES];
+int totalSessoes = 0;
+
+// Calcula potência disponível
+- Calculamos a potência disponível para caso haja mais de uma sessão ocorrendo simultaneamente
+float calcularPotencia() {
+    int ativas = 0;
+
+    for(int i = 0; i < totalSessoes; i++) {
+        if(sessoes[i].ativa)
+            ativas++;
+    }
+
+    if(ativas == 0)
+        return 0;
+
+    return POTENCIA_MAXIMA / ativas;
+}
+
+// Tarifa dinâmica
+- Aqui calculamos uma tarifa mais dinâmica, com horário de pico.
+- Caso a pessoa realize a recarga entre às 18h e 22h, a tarifa será maior
+- Caso a pessoa realize a recarga entre às 00h e 06h, a tarifa será menor
+- Caso a pessoa realize a recarga entre às 06h e 18h, a tarifa será normal
+float calcularTarifa() {
+    int hora;
+
+    printf("Digite a hora atual (0-23): ");
+    scanf("%d", &hora);
+
+    if(hora >= 18 && hora <= 22)
+        return 1.20;
+    else if(hora >= 0 && hora <= 6)
+        return 0.60;
+    else
+        return 0.90;
+}
+
+// Simulação de integração externa
+- Aqui é um pequeno sistema de integração (Para ficar mais bonito visualmente para o usuário)
+void enviarDados(int id) {
+    printf("\n=== SIMULACAO OCPP ===\n");
+    printf("Enviando dados da sessao %d...\n", id);
+    printf("{id:%d,status:'carregando'}\n", id);
+    printf("Resposta recebida: OK\n");
+}
+
+// Criar sessão
+- Aqui é a parte para criar as sessões, caso atinja 10 sessões simultaneas, ele printa que o limite foi atingido
+void criarSessao() {
+
+    if(totalSessoes >= MAX_SESSOES) {
+        printf("Limite de sessoes atingido!\n");
+        return;
+    }
+
+    struct Sessao nova;
+
+    nova.id = totalSessoes + 1; - Aqui ele cria uma nova id com base no número da sessão
+
+    printf("Nome do veiculo: ");
+    scanf("%s", nova.veiculo);
+
+    printf("Energia desejada (kWh): ");
+    scanf("%f", &nova.energia);
+
+    nova.ativa = 1;
+
+    sessoes[totalSessoes] = nova;
+    totalSessoes++;
+
+    printf("Sessao criada com sucesso!\n");
+}
+
+// Encerrar sessão
+- Nessa parte, foi criada uma função para encerrar a sessão caso o usuário queira erncerrar.
+- Ele digita o ID da sessão e encerra ela
+void encerrarSessao() {
+    int id;
+
+    printf("Digite o ID da sessao: ");
+    scanf("%d", &id);
+
+    for(int i = 0; i < totalSessoes; i++) {
+        if(sessoes[i].id == id) {
+            sessoes[i].ativa = 0;
+            printf("Sessao encerrada!\n");
+            return;
+        }
+    }
+
+    printf("Sessao nao encontrada.\n");
+}
+
+// Mostrar sessões
+- Nessa parte foi criada uma função para verificar quantas sessões estão ativas, com cada informação da sessão e se ela já foi encerrada ou não
+void listarSessoes() {
+
+    float potencia = calcularPotencia();
+
+    printf("\n===== SESSOES =====\n");
+
+    for(int i = 0; i < totalSessoes; i++) {
+
+        printf("\nID: %d", sessoes[i].id);
+        printf("\nVeiculo: %s", sessoes[i].veiculo);
+        printf("\nEnergia: %.2f kWh", sessoes[i].energia);
+
+        if(sessoes[i].ativa)
+            printf("\nStatus: Ativa");
+        else
+            printf("\nStatus: Encerrada");
+
+        printf("\n");
+    }
+
+    printf("\nPotencia por sessao ativa: %.2f kW\n", potencia);
+}
+
+// Relatório
+- Função criada para gerar um relatório geral da sessão
+void gerarRelatorio() {
+
+    float tarifa = calcularTarifa();
+
+    printf("\n===== RELATORIO =====\n");
+
+    for(int i = 0; i < totalSessoes; i++) {
+
+        float custo = sessoes[i].energia * tarifa;
+
+        printf("\nSessao %d", sessoes[i].id);
+        printf("\nVeiculo: %s", sessoes[i].veiculo);
+        printf("\nEnergia: %.2f kWh", sessoes[i].energia);
+        printf("\nCusto estimado: R$ %.2f\n", custo);
+    }
+}
+
+int main() {
+- Main, com sistema de switch case para o usuário escolher as opções que desejar
+    int opcao;
+
+    do {
+
+        printf("\n");
+        printf("===== SISTEMA DE RECARGA =====\n");
+        printf("1 - Criar sessao\n");
+        printf("2 - Listar sessoes\n");
+        printf("3 - Encerrar sessao\n");
+        printf("4 - Simular envio OCPP\n");
+        printf("5 - Gerar relatorio\n");
+        printf("0 - Sair\n");
+        printf("Opcao: ");
+        scanf("%d", &opcao);
+
+        switch(opcao) {
+
+            case 1:
+                criarSessao();
+                break;
+
+            case 2:
+                listarSessoes();
+                break;
+
+            case 3:
+                encerrarSessao();
+                break;
+
+            case 4: {
+                int id;
+                printf("Digite o ID da sessao: ");
+                scanf("%d", &id);
+                enviarDados(id);
+                break;
+            }
+
+            case 5:
+                gerarRelatorio();
+                break;
+
+            case 0:
+                printf("Encerrando sistema...\n");
+                break;
+
+            default:
+                printf("Opcao invalida!\n");
+        }
+
+    } while(opcao != 0);
+
+    return 0;
+}
