@@ -12,11 +12,11 @@ typedef struct
 
 } Produtos;
 
-void AplicacaoDesc(Produtos *desc, float desconto)
+void AplicacaoDesc(Produtos *p, float desconto)
 {
-    desc->desconto = desconto;
-    printf("O produto %s com preco de R$%d,00 recebeu um desconto de %.2f%%\n", desc->nome, desc->preco, desc->desconto);
-    printf("O valor final do produto %s com desconto de %.2f%% é de R$%.2f\n", desc->nome, desc->desconto, desc->preco - (desc->preco * (desc->desconto / 100)));
+    p->preco = p->preco - (p->preco * desconto / 100);
+    printf("O produto %s com preco de R$%d,00 recebeu um desconto de %.2f%%\n", p->nome, p->preco, desconto);
+    printf("O valor final do produto %s com desconto de %.2f%% é de R$%.2f\n", p->nome, desconto, p->preco - (p->preco * (desconto / 100)));
 }
 
 void ListaProd(Produtos *prod, int tamanho)
