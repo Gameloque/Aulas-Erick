@@ -9,7 +9,7 @@ scanf("%d", &numero);
                     //Lógica do Loop e da soma
 char sair;
     while(sair != "s" || sair != 'S'){
-        printf('Digite mais um numero para ser somado ou digite s para sair');
+        printf("Digite mais um numero para ser somado ou digite s para sair");
 scanf("%c", &sair);
     }                
 
