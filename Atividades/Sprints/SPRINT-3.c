@@ -270,16 +270,11 @@ void listarSessoes() {
 void buscarSessao() {
 
     int id;
-    int inicio = 0;
-    int fim = totalSessoes - 1;
-    int meio;
-
 
     if (totalSessoes == 0) {
         printf("\nNenhuma sessao cadastrada.\n");
         return;
     }
-
 
     printf("\nDigite o ID da sessao: ");
 
@@ -289,27 +284,20 @@ void buscarSessao() {
         return;
     }
 
+    for (int i = 0; i < totalSessoes; i++) {
 
-    /* Busca binaria */
-    while (inicio <= fim) {
-
-        meio = (inicio + fim) / 2;
-
-
-        if (sessoes[meio].id == id) {
-
-            Sessao *encontrada = &sessoes[meio];
+        if (sessoes[i].id == id) {
 
             printf("\n===== SESSAO ENCONTRADA =====\n");
 
-            printf("ID: %d\n", encontrada->id);
-            printf("Veiculo: %s\n", encontrada->veiculo);
-            printf("Potencia: %.2f kW\n", encontrada->potencia);
-            printf("Energia: %.2f kWh\n", encontrada->energia);
-            printf("Tarifa: R$ %.2f\n", encontrada->tarifa);
-            printf("Custo: R$ %.2f\n", encontrada->custo);
+            printf("ID: %d\n", sessoes[i].id);
+            printf("Veiculo: %s\n", sessoes[i].veiculo);
+            printf("Potencia: %.2f kW\n", sessoes[i].potencia);
+            printf("Energia: %.2f kWh\n", sessoes[i].energia);
+            printf("Tarifa: R$ %.2f\n", sessoes[i].tarifa);
+            printf("Custo: R$ %.2f\n", sessoes[i].custo);
 
-            if (encontrada->ativa == 1) {
+            if (sessoes[i].ativa == 1) {
                 printf("Status: Ativa\n");
             }
             else {
@@ -318,49 +306,11 @@ void buscarSessao() {
 
             return;
         }
-
-
-        if (id < sessoes[meio].id) {
-            fim = meio - 1;
-        }
-        else {
-            inicio = meio + 1;
-        }
     }
-
 
     printf("\nSessao nao encontrada.\n");
 }
 
-
-/* Ordena as sessoes usando Selection Sort */
-void ordenarSessoes() {
-
-    Sessao temp;
-    int menor;
-
-
-    for (int i = 0; i < totalSessoes - 1; i++) {
-
-        menor = i;
-
-
-        for (int j = i + 1; j < totalSessoes; j++) {
-
-            if (sessoes[j].id < sessoes[menor].id) {
-                menor = j;
-            }
-        }
-
-
-        temp = sessoes[i];
-        sessoes[i] = sessoes[menor];
-        sessoes[menor] = temp;
-    }
-
-
-    printf("\nSessoes ordenadas pelo ID!\n");
-}
 
 
 /* Mostra as estatisticas */
@@ -474,9 +424,8 @@ int main() {
         printf("1 - Criar sessao\n");
         printf("2 - Listar sessoes\n");
         printf("3 - Buscar sessao\n");
-        printf("4 - Ordenar sessoes\n");
-        printf("5 - Mostrar estatisticas\n");
-        printf("6 - Encerrar sessao\n");
+        printf("4 - Mostrar estatisticas\n");
+        printf("5 - Encerrar sessao\n");
         printf("0 - Sair\n");
 
 
@@ -508,14 +457,10 @@ int main() {
                 break;
 
             case 4:
-                ordenarSessoes();
-                break;
-
-            case 5:
                 mostrarEstatisticas();
                 break;
 
-            case 6:
+            case 5:
                 encerrarSessao();
                 break;
 
