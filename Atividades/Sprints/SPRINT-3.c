@@ -225,15 +225,15 @@ void criarSessao() {
     totalSessoes++;
 
 
-    printf("\n===== SESSAO CRIADA =====\n");
+    printf("\n======= SESSAO CRIADA =======\n");
 
-    printf("ID: %d\n", nova.id);
-    printf("Veiculo: %s\n", nova.veiculo);
-    printf("Potencia: %.2f kW\n", nova.potencia);
-    printf("Tempo: %.2f minutos\n", nova.minutos_recarga);
-    printf("Energia: %.2f kWh\n", nova.energia);
-    printf("Tarifa: R$ %.2f\n", nova.tarifa);
-    printf("Custo: R$ %.2f\n", nova.custo);
+    printf(" || ID: %d\n", nova.id);
+    printf(" || Veiculo: %s\n", nova.veiculo);
+    printf(" || Potencia: %.2f kW\n", nova.potencia);
+    printf(" || Tempo: %.2f minutos\n", nova.minutos_recarga);
+    printf(" || Energia: %.2f kWh\n", nova.energia);
+    printf(" || Tarifa: R$ %.2f\n", nova.tarifa);
+    printf(" || Custo: R$ %.2f\n", nova.custo);
 }
 
 
@@ -245,16 +245,16 @@ void listarSessoes() {
         return;
     }
 
-    printf("\n===== LISTA DE SESSOES =====\n");
+    printf("\n======= LISTA DE SESSOES =======\n");
 
     for (int i = 0; i < totalSessoes; i++) {
 
-        printf("\nID: %d", sessoes[i].id);
-        printf("\nVeiculo: %s", sessoes[i].veiculo);
-        printf("\nPotencia: %.2f kW", sessoes[i].potencia);
-        printf("\nEnergia: %.2f kWh", sessoes[i].energia);
-        printf("\nTarifa: R$ %.2f", sessoes[i].tarifa);
-        printf("\nCusto: R$ %.2f", sessoes[i].custo);
+        printf(" || ID: %d\n", sessoes[i].id);
+        printf(" || Veiculo: %s\n", sessoes[i].veiculo);
+        printf(" || Potencia: %.2f kW\n", sessoes[i].potencia);
+        printf(" || Energia: %.2f kWh\n", sessoes[i].energia);
+        printf(" || Tarifa: R$ %.2f\n", sessoes[i].tarifa);
+        printf(" || Custo: R$ %.2f\n", sessoes[i].custo);
 
         if (sessoes[i].ativa == 1) {
             printf("\nStatus: Ativa\n");
@@ -418,7 +418,7 @@ int main() {
     do {
 
         printf("\n====================================\n");
-        printf("       SIMULADOR DE RECARGA\n");
+        printf(" ||      SIMULADOR DE RECARGA    ||\n");
         printf("====================================\n");
 
         printf("1 - Criar sessao\n");
