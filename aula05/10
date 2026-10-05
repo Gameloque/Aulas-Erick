@@ -1,0 +1,139 @@
+#include <stdio.h>
+        
+typedef struct No No;
+
+struct No{
+    int valor;
+    struct No* proximo;
+};
+void inserir_valor_inicio(){}
+void inserir_valor_final(){}
+void imprimir_lista(){}
+void buscar_lista(){}
+void remover_valor_inicio(){}
+void remover_valor_final(){}
+
+int main()
+{
+    int opcao;
+    printf("===      Lista Encadeada      ===\n");
+    printf("=== Inserir Valor(Inicio) - 1 ===\n");
+    printf("=== Inserir Valor(Fim)    - 2 ===\n");
+    printf("=== Imprimir Lista        - 3 ===\n");
+    printf("=== Buscar                - 4 ===\n");
+    printf("=== Remover Valor(Inicio) - 5 ===\n");
+    printf("=== Remover Valor(Fim)    - 6 ===\n");
+    printf("=== Selecione uma opção: ");
+    
+    switch(opcao){ 
+        case 1:
+        inserir_valor_inicio();
+        break;
+        case 2:
+        inserir_valor_final();
+        break;
+        case 3:
+        imprimir_lista();
+        break;
+        case 4:
+        buscar_lista();
+        break;
+        case 5:
+        remover_valor_inicio();
+        break;
+        case 6: 
+        remover_valor_final();
+        break;
+}
+    return 0;
+}
+
+#include <stdio.h>
+#include <stdlib.h> //malloc (memory allocation), realloc
+
+typedef struct Node No;
+
+struct Node{
+    int dado;
+    struct Node *proximo;
+};
+
+void inserirInicio(No** head, int valor){
+    No* novo = malloc(sizeof(No));
+    novo->dado = valor;
+    novo->proximo = *head;
+    *head = novo; 
+}
+
+void imprimirLista(No* head){
+    No* atual = head;
+    while (atual != NULL){
+        printf("%d -> ", atual->dado);
+        atual = atual->proximo;
+    }
+    printf("NULL\n");
+}
+
+No* buscar(No* head, int alvo){
+    No* atual = head;
+    while(atual != NULL){
+        if(atual->dado == alvo)return atual;
+        atual = atual->proximo;
+    }
+    return NULL;
+}
+// O que falta!
+
+// void inserirFim(){}
+// void removerInicio(){}
+// void removerValor(){}
+// liberarLista(){}
+
+int main(){
+    No* No; // Declaração do No da Lista Ligada
+    
+    No = (struct Node*) malloc(sizeof(No));
+
+    printf("%d\n", No->dado);
+    No->dado = 10;
+    No->proximo = NULL;
+    printf("%d\n", No->dado);
+    if(No == NULL){
+        printf("Erro: Memória insuiciente!\n");
+        exit(1);
+    }
+    
+    inserirInicio(&No, 5);
+    inserirInicio(&No, 30);
+
+    //inserirInicio(&No, 67);
+    inserirInicio(&No, 24);
+   
+    imprimirLista(No);
+    
+
+    struct Node* novoNo;
+    int alvo = 67; 
+    novoNo = buscar(No, alvo);
+    if (novoNo == NULL){
+        printf("Valor não encontrado!\n");
+        exit(1);
+    }
+    printf("O valor buscado -> %d.\nValor encontrado -> %d", alvo, novoNo->dado);
+
+   /*if(n1 == NULL || n2 == NULL || n3 == NULL){
+       printf("Erro:  Memória insuficiente!\n");
+       exit(1);
+   }
+   inserirInicio(n2, 10);
+   inserirInicio(n3, 20);
+   inserirInicio(NULL, 30);
+   imprimirLista(n3);
+
+   //printf("%d\n", novoNo->dado); // Estruturas (struct), ponteiros
+   //novoNo->dado = 10;
+   //printf("%d\n", novoNo->dado);
+   //novoNo->proximo = NULL;
+   */
+   return 0;
+}
