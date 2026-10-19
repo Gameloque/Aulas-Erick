@@ -21,6 +21,30 @@ struct No
     No *proximo;
 };
 
+No *bubblesort(No *inicio){
+    if(inicio == NULL){
+        printf("Lista vazia!\n");
+    }
+    int trocou;
+    No *atual = malloc(sizeof(No));
+    No *ultimo = NULL;
+    ultimo = malloc(sizeof(No));
+    do{
+        trocou = 0;
+        atual = inicio;
+        while(atual->proximo != ultimo){
+            if(atual->valor_consumo > atual->proximo->valor_consumo){
+                int temp = atual->valor_consumo;
+                atual->valor_consumo = atual->proximo->valor_consumo;
+                atual->proximo->valor_consumo = temp;
+            }
+            atual = atual->proximo;
+        }
+        ultimo = atual;
+    }while(trocou);
+
+}
+
 /* =========================================================
    INSERIR NO INÍCIO
    Complexidade: O(1)
@@ -437,6 +461,8 @@ int main(void)
         printf("7 - Remover valor de consumo\n");
         printf("8 - Contar equipamentos registrados\n");
         printf("9 - Somar valores de consumo dos equipamentos\n");
+        printf("10 - Ordenar de forma crescente os equipamento por consumo\n");
+        printf("11 - Apagar Lista\n");
         printf("0 - Sair\n");
 
         printf("\nEscolha: ");
@@ -590,7 +616,18 @@ int main(void)
             break;
 
             /* -------------------------- */
+        
+        case 10:
+            bubblesort(inicio);
+            printf("Lista ordenada!\n");
+            imprimirLista(inicio);
+            break;
 
+            /* -------------------------- */
+        case 11:
+            liberarLista(inicio);
+            printf("Lista Apagada!");
+            /* -------------------------- */
         case 0:
 
             printf("Encerrando programa...\n");
