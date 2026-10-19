@@ -1,0 +1,618 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h> // comparar string
+
+/*
+    Primeiro criamos o apelido "No"
+    para a estrutura struct No.
+*/
+typedef struct No No;
+
+/*
+    Cada nó possui:
+
+    valor   -> informação armazenada
+    proximo -> endereço do próximo nó
+*/
+struct No
+{
+    char equipamento[20];
+    int valor_consumo;
+    No *proximo;
+};
+
+/* =========================================================
+   INSERIR NO INÍCIO
+   Complexidade: O(1)
+   ========================================================= */
+
+No *inserirInicio(No *inicio, char equipamento[20], int valor)
+{
+
+    /*
+        Reserva memória para um novo nó.
+    */
+    No *novo = malloc(sizeof(No));
+
+    /*
+        Verifica se a memória foi alocada.
+    */
+    if (novo == NULL)
+    {
+        printf("Erro ao alocar memoria.\n");
+        return inicio;
+    }
+
+    /*
+        Armazena o valor.
+    */
+    strcpy(novo->equipamento, equipamento);
+    novo->valor_consumo = valor;
+
+    /*
+        O novo nó aponta para o antigo início.
+    */
+    novo->proximo = inicio;
+
+    /*
+        Agora o novo nó será o início da lista.
+    */
+    return novo;
+}
+
+/* =========================================================
+   INSERIR NO FIM
+   Complexidade: O(n)
+   ========================================================= */
+
+No *inserirFim(No *inicio, char equipamento[20], int valor)
+{
+
+    No *novo = malloc(sizeof(No));
+
+    if (novo == NULL)
+    {
+        printf("Erro ao alocar memoria.\n");
+        return inicio;
+    }
+
+    strcpy(novo->equipamento, equipamento);
+    novo->valor_consumo = valor;
+
+    /*
+        Como será o último elemento,
+        seu próximo será NULL.
+    */
+    novo->proximo = NULL;
+
+    /*
+        Caso especial:
+        lista vazia.
+    */
+    if (inicio == NULL)
+    {
+        return novo;
+    }
+
+    /*
+        Criamos um ponteiro auxiliar
+        para percorrer a lista.
+    */
+    No *atual = inicio;
+
+    /*
+        Procuramos o último nó.
+    */
+    while (atual->proximo != NULL)
+    {
+        atual = atual->proximo;
+    }
+
+    /*
+        O antigo último nó passa
+        a apontar para o novo nó.
+    */
+    atual->proximo = novo;
+
+    return inicio;
+}
+
+/* =========================================================
+   IMPRIMIR A LISTA
+   Complexidade: O(n)
+   ========================================================= */
+
+void imprimirLista(No *inicio)
+{
+
+    if (inicio == NULL)
+    {
+        printf("Lista vazia.\n");
+        return;
+    }
+
+    No *atual = inicio;
+
+    printf("\nLista: ");
+
+    while (atual != NULL)
+    {
+
+        printf("%s - %d kWh -> ", atual->equipamento, atual->valor_consumo);
+
+        atual = atual->proximo;
+    }
+
+    printf("NULL\n");
+}
+
+/* =========================================================
+   BUSCAR UM VALOR
+   Melhor caso: O(1)
+   Pior caso: O(n)
+   ========================================================= */
+
+No *buscar(No *inicio, int valor)
+{
+
+    No *atual = inicio;
+
+    while (atual != NULL)
+    {
+
+        if (atual->valor_consumo == valor)
+        {
+
+            /*
+                Retorna o endereço
+                do nó encontrado.
+            */
+            return atual;
+        }
+
+        atual = atual->proximo;
+    }
+
+    /*
+        Não encontrou.
+    */
+    return NULL;
+}
+
+/* =========================================================
+   BUSCAR UM VALOR
+   Melhor caso: O(1)
+   Pior caso: O(n)
+   ========================================================= */
+
+No *buscar_equipamento(No *inicio, char nome_equipamento[20])
+{
+
+    No *atual = inicio;
+
+    while (atual != NULL)
+    {
+
+        if (strcmp(atual->equipamento, nome_equipamento) == 0)
+        {
+
+            /*
+                Retorna o endereço
+                do nó encontrado.
+            */
+            return atual;
+        }
+
+        atual = atual->proximo;
+    }
+
+    /*
+        Não encontrou.
+    */
+    return NULL;
+}
+
+/* =========================================================
+   REMOVER O PRIMEIRO NÓ
+   Complexidade: O(1)
+   ========================================================= */
+
+No *removerInicio(No *inicio)
+{
+
+    /*
+        Não existe nada para remover.
+    */
+    if (inicio == NULL)
+    {
+        printf("Lista vazia.\n");
+        return NULL;
+    }
+
+    /*
+        Guardamos o endereço do nó
+        que será removido.
+    */
+    No *remover = inicio;
+
+    /*
+        O segundo nó passa a ser
+        o novo início.
+    */
+    inicio = inicio->proximo;
+
+    /*
+        Libera a memória do antigo início.
+    */
+    free(remover);
+
+    return inicio;
+}
+
+/* =========================================================
+   REMOVER UM VALOR
+   Melhor caso: O(1)
+   Pior caso: O(n)
+   ========================================================= */
+
+No *removerValor(No *inicio, int valor)
+{
+
+    if (inicio == NULL)
+    {
+        printf("Lista vazia.\n");
+        return NULL;
+    }
+
+    /*
+        Caso especial:
+        o valor está no primeiro nó.
+    */
+    if (inicio->valor_consumo == valor)
+    {
+
+        No *remover = inicio;
+
+        inicio = inicio->proximo;
+
+        free(remover);
+
+        printf("Valor removido.\n");
+
+        return inicio;
+    }
+
+    /*
+        Precisamos acompanhar dois nós:
+
+        anterior -> nó anterior
+        atual    -> nó que estamos analisando
+    */
+    No *anterior = inicio;
+    No *atual = inicio->proximo;
+
+    while (atual != NULL)
+    {
+
+        if (atual->valor_consumo == valor)
+        {
+
+            /*
+                Faz o nó anterior ignorar
+                o nó atual.
+            */
+            anterior->proximo =
+                atual->proximo;
+
+            /*
+                Agora podemos liberar
+                o nó removido.
+            */
+            free(atual);
+
+            printf("Valor removido.\n");
+
+            return inicio;
+        }
+
+        /*
+            Avançamos os dois ponteiros.
+        */
+        anterior = atual;
+        atual = atual->proximo;
+    }
+
+    printf("Valor nao encontrado.\n");
+
+    return inicio;
+}
+
+/* =========================================================
+   CONTAR ELEMENTOS
+   Complexidade: O(n)
+   ========================================================= */
+
+int contarNos(No *inicio)
+{
+
+    int quantidade = 0;
+
+    No *atual = inicio;
+
+    while (atual != NULL)
+    {
+
+        quantidade++;
+
+        atual = atual->proximo;
+    }
+
+    return quantidade;
+}
+
+/* =========================================================
+   SOMAR OS VALORES
+   Complexidade: O(n)
+   ========================================================= */
+
+int somarLista(No *inicio)
+{
+
+    int soma = 0;
+
+    No *atual = inicio;
+
+    while (atual != NULL)
+    {
+
+        soma += atual->valor_consumo;
+
+        atual = atual->proximo;
+    }
+
+    return soma;
+}
+
+/* =========================================================
+   LIBERAR TODA A LISTA
+   Complexidade: O(n)
+   ========================================================= */
+
+void liberarLista(No *inicio)
+{
+
+    No *atual = inicio;
+
+    while (atual != NULL)
+    {
+
+        /*
+            Precisamos salvar o próximo
+            ANTES de usar free().
+        */
+        No *proximo = atual->proximo;
+
+        /*
+            Libera o nó atual.
+        */
+        free(atual);
+
+        /*
+            Continua no próximo nó.
+        */
+        atual = proximo;
+    }
+}
+
+/* =========================================================
+   PROGRAMA PRINCIPAL
+   ========================================================= */
+
+int main(void)
+{
+
+    /*
+        A lista começa vazia.
+    */
+    No *inicio = NULL;
+
+    int opcao;
+    int valor;
+    char nome_equipamento[20];
+
+    do
+    {
+
+        printf("\n");
+        printf("=================================\n");
+        printf("       LISTA ENCADEADA\n");
+        printf("=================================\n");
+
+        printf("1 - Inserir Equipamento no inicio da lista\n");
+        printf("2 - Inserir Equipamento no fim da lista\n");
+        printf("3 - Mostrar lista de equipamentos\n");
+        printf("4 - Buscar valor de consumo\n");
+        printf("5 - Buscar por nome de equipamento\n");
+        printf("6 - Remover primeiro equipamento\n");
+        printf("7 - Remover valor de consumo\n");
+        printf("8 - Contar equipamentos registrados\n");
+        printf("9 - Somar valores de consumo dos equipamentos\n");
+        printf("0 - Sair\n");
+
+        printf("\nEscolha: ");
+        scanf("%d", &opcao);
+        // verificador lógico
+
+        switch (opcao)
+        {
+
+            /* -------------------------- */
+
+        case 1:
+            printf("Digite o nome do equipamento: ");
+            scanf("%s", nome_equipamento);
+            printf("Digite o valor do consumo do equipamento: ");
+            scanf("%d", &valor);
+
+            inicio =
+                inserirInicio(
+                    inicio,
+                    nome_equipamento,
+                    valor);
+
+            break;
+
+            /* -------------------------- */
+
+        case 2:
+
+            printf("Digite o nome do equipamento: ");
+            scanf("%s", nome_equipamento);
+            printf("Digite o valor do consumo do equipamento: ");
+            scanf("%d", &valor);
+
+            inicio =
+                inserirFim(
+                    inicio,
+                    nome_equipamento,
+                    valor);
+
+            break;
+
+            /* -------------------------- */
+
+        case 3:
+
+            imprimirLista(inicio);
+
+            break;
+
+            /* -------------------------- */
+
+        case 4:
+        {
+
+            printf("Valor para buscar de consumo: ");
+            scanf("%d", &valor);
+
+            No *resultado =
+                buscar(
+                    inicio,
+                    valor);
+
+            if (resultado != NULL)
+            {
+
+                printf(
+                    "Valor %d encontrado.\n",
+                    resultado->valor_consumo);
+            }
+            else
+            {
+
+                printf(
+                    "Valor nao encontrado.\n");
+            }
+
+            break;
+        }
+            /* -------------------------- */
+        case 5:
+        {
+
+            printf("Insira o nome do equipamento: ");
+            scanf("%s", nome_equipamento);
+            //fgets(nome_equipamento, 20, stdin);
+
+            No *resultado =
+                buscar_equipamento(
+                    inicio,
+                    nome_equipamento);
+
+            if (resultado != NULL)
+            {
+
+                printf(
+                    "Equipamento encontrado! Nome: %s.\n",
+                    resultado->equipamento);
+            }
+            else
+            {
+
+                printf(
+                    "Equipamento nao encontrado.\n");
+            }
+
+            break;
+        }
+
+            /* -------------------------- */
+
+        case 6:
+
+            inicio =
+                removerInicio(inicio);
+
+            break;
+
+            /* -------------------------- */
+
+        case 7:
+
+            printf("Valor para remover: ");
+            scanf("%d", &valor);
+
+            inicio =
+                removerValor(
+                    inicio,
+                    valor);
+
+            break;
+
+            /* -------------------------- */
+
+        case 8:
+
+            printf(
+                "Quantidade de elementos: %d\n",
+                contarNos(inicio));
+
+            break;
+
+            /* -------------------------- */
+
+        case 9:
+
+            printf(
+                "Soma dos valores: %d\n",
+                somarLista(inicio));
+
+            break;
+
+            /* -------------------------- */
+
+        case 0:
+
+            printf("Encerrando programa...\n");
+
+            break;
+
+            /* -------------------------- */
+
+        default:
+
+            printf("Opcao invalida.\n");
+        }
+
+    } while (opcao != 0);
+
+    /*
+        Antes de terminar o programa,
+        liberamos toda a memória.
+    */
+    liberarLista(inicio);
+
+    inicio = NULL;
+
+    return 0;
+}
